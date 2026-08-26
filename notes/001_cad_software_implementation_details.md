@@ -112,3 +112,60 @@ Suppose you have two points, and you have the following constraint:
 When you specify the horizontal constraint, there are in fact, 2 solutions, either $P_1$ is to the left, or to the right of $P_2$, or vice versa right? But, if we were to just place the point $P_1$ to the left of $P_2$, the closest solution would probably be to state that $P_1$ is $c$ distance to the right of $P_2$ right? 
 
 It's the same as when you specify a corner rectangle, specify that the left bottom corner is coincident to the origin, and specify kinda the orientiation of the rectangle in the unconstrained state, such that you "nudge" the initial conditions to roughly the solution you want?
+
+# Lofting
+
+So lofting is sort of like linear interpolation, but instead of having 2 points, we have 2 surfaces, or just two closed curve. Now, this is interesting, because, interpolation can be done in infinitely different way, you can use like, linear, or Bezier etc. For the two closed curve, we can do it linearly, however, I'm not quite certain how we would parameterize that, because, we essentially need to have a one-to-one representation from the set of points from one closed curve to another closed curve.
+
+Essentially, for simple linear interpolation, given a point $P_1$ and another point $P_2$ 
+
+The line segment we get is represented as $\vec{r}$ from the origin, such that:
+
+$$
+\vec{r} = \vec{O P_1} + t (\vec{P_1 P_2})
+$$
+
+Where $t \in [0, 1]$.
+
+For a surface, we already parametrically define it as such, we say that a closed curve $S_1$ is parameterized.
+
+$$
+\vec{r_1} = f(t)
+$$
+
+Similarly, the other closed curve is parameterized similarly:
+
+$$
+\vec{r_2} = g(t)
+$$
+
+Now, do we just do:
+
+$$
+\vec{r_3} = (1 - \alpha) f(t) + \alpha g(t)
+$$
+
+Ranging $\alpha \in [0, 1]$? But the fact is, one curve can be parameterized is many different ways. Suppose that at we have 2 circles of different size offset in the z axis. It might be the case that for the same t, f(t) is a point like to the left, and then g(t) is all the way to the right. The linear interpolation would give a line from all the way to the left to all the way to the right, which, isn't quite what we want because, when we think of a loft, we think of a point all the way to the right from surface $S_1$ getting linearly interpolated to a point all the way to the right of surface $S_2$. So is there a systematic way of choosing the parameter for all 2 curves? Do we parameterize it using some sort of polar coordinate such that the interpolation looks right? 
+
+I also have a feeling that this problem must also be dealt with when dealing with the minimal surface problem, like how a soap bubble between 2 closed curve will naturally follow the minimal surface or something.
+
+So it seems like a nice option is to parameterize it using the normalized arc length $s$ or something, however, you'd still need to decide where the shared parameter $s$ starts for both curves, which might not be obvious, and similarly for direction.
+
+# Piping
+
+So piping is very similar to lofting, in fact, you could say that it's generalization of lofting. Essentially, when you specify a pipe trajectory, you can pretend that you're lofting (or extruding) normally, however, you continuously shift the plane such that it's normal to the trajectory you specified or something right?
+
+Idk maybe something like that, who knows.
+
+# Completeness
+
+I want to talk a bit about whether the set of features a typical parametric design software provide is "complete". Like, if we're talking about like, a mesh 3d design software, we could say that it's complete because any shape can be approximated with triangles, and since we're manipulating the triangles directly, we can basically create any continuous 3d shape that you want. In a parametric design software however, I'm sure that there are examples of some objects that is pretty much impossible with the basic:
+
+- extrude
+- loft
+- pipe
+- revolve
+
+Operations right?
+
+To expand the "vector space" of all the objects that we can construct, it is perhaps necessary to add primitives such as spheres, cylinders and boxes, along side boolean operations such as difference, union, intersection, etc. We might also add the ability to define curves parametrically or mathematically.
