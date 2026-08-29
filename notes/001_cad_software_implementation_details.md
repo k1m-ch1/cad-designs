@@ -50,7 +50,7 @@ The graphing itself is done by some kind of 2d geometric kernel.
 
 Ok, so let's first deal with points, and only points.
 
-Every point in 2d let's say, has coordinate $\begin{bmatrix}x\\y\end{bmatrix}$. Now, we can add basic constraints such as:
+Every point in 2d let's say, has coordinate $\begin{bmatrix}x \\ y\end{bmatrix}$. Now, we can add basic constraints such as:
 
 - Horizontal constraint, by saying $y_1 = y_2$
 - Vertical constraints by saying $x_1 = x_2$
